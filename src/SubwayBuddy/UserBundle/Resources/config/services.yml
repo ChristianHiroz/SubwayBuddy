@@ -1,0 +1,6 @@
+services:
+    admin.customer:
+        class: SubwayBuddy\UserBundle\Admin\UserAdmin
+        arguments: [~, SubwayBuddy\UserBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Utilisateur, group: Utilisateurs }
