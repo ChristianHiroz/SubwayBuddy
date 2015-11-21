@@ -21,7 +21,8 @@
         "sonata-project/admin-bundle": "2.3.*",
         "sonata-project/doctrine-orm-admin-bundle": "2.3.*",
         "friendsofsymfony/rest-bundle": "^1.7@dev",
-        "jms/serializer-bundle": "^1.1"
+        "jms/serializer-bundle": "^1.1",
+        "friendsofsymfony/oauth-server-bundle": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

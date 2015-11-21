@@ -117,3 +117,12 @@ fos_rest:
         default_engine: twig
     routing_loader:
         default_format: json
+
+fos_oauth_server:
+    db_driver:           orm
+    client_class:        SubwayBuddy\UserBundle\Entity\User
+    access_token_class:  SubwayBuddy\UserBundle\Entity\AccessToken
+    refresh_token_class: SubwayBuddy\UserBundle\Entity\efreshToken
+    auth_code_class:     SubwayBuddy\UserBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_manager             # This property will be used when valid credentials are given to load the user upon access token creation
