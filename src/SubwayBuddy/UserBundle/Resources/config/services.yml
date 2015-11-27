@@ -4,3 +4,6 @@ services:
         arguments: [~, SubwayBuddy\UserBundle\Entity\User, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Utilisateur, group: Utilisateurs }
+    subwaybuddy_user.user_service:
+         class: SubwayBuddy\UserBundle\Handler\UserHandler
+         arguments: [ @doctrine.orm.entity_manager, @service_container, %fos_user.model.user.class%]
