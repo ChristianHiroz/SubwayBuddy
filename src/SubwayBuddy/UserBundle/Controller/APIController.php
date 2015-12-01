@@ -3,6 +3,7 @@
 namespace SubwayBuddy\UserBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -219,10 +220,45 @@ class APIController extends FOSRestController
      *
      * @return View
      */
-    public function postUserAction(ParamFetcher $paramFetcher)
+    public function postUsersAction(ParamFetcher $paramFetcher)
     {
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->createUser();
+        $user->setUsername($paramFetcher->get('username'));
+        $user->setEmail($paramFetcher->get('email'));
+        $user->setPlainPassword($paramFetcher->get('password'));
+        $user->setEnabled(true);
+        $user->addRole('ROLE_API');
+        $view = Vieww::create();
+        $errors = $this->get('validator')->validate($user, array('Registration'));
+        if (count($errors) == 0) {
+            $userManager->updateUser($user);
+            $view->setData($user)->setStatusCode(200);
+            return $view;
+        } else {
+            $view = $this->getErrorsView($errors);
+            return $view;
+        }
+    }
+
+    /**
+     * Update a User from the submitted data.<br/>
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="username", nullable=false, strict=true, description="Username.")
+     * @RequestParam(name="email", nullable=false, strict=true, description="Email.")
+     * @RequestParam(name="password", nullable=false, strict=true, description="Plain Password.")
+     * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
+     * @Put
+     *
+     * @return View
+     */
+    public function putUsersAction(ParamFetcher $paramFetcher)
+    {
+        $id = $paramFetcher->get('user');
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->find($id);
         $user->setUsername($paramFetcher->get('username'));
         $user->setEmail($paramFetcher->get('email'));
         $user->setPlainPassword($paramFetcher->get('password'));
