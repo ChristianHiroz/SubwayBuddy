@@ -25,7 +25,7 @@ class UserHandler implements UserHandlerInterface
         $this->manager = $this->container->get('fos_user.user_manager');
     }
 
-    public function   login($username, $password)
+    public function login($username, $password)
     {
        //$jsonErrorCreator = $this->container->get('subwaybuddy_api.create_error_json');  TODO error
         $code = 0;

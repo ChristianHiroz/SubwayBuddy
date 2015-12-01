@@ -4,6 +4,16 @@ services:
         arguments: [~, SubwayBuddy\UserBundle\Entity\User, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Utilisateur, group: Utilisateurs }
+    admin.travel:
+        class: SubwayBuddy\UserBundle\Admin\TravelAdmin
+        arguments: [~, SubwayBuddy\UserBundle\Entity\Travel, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Voyages, group: Utilisateurs }
+    admin.subject:
+        class: SubwayBuddy\UserBundle\Admin\SubjectAdmin
+        arguments: [~, SubwayBuddy\UserBundle\Entity\Subject, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Sujets de discussion, group: Utilisateurs }
     subwaybuddy_user.user_service:
          class: SubwayBuddy\UserBundle\Handler\UserHandler
          arguments: [ @doctrine.orm.entity_manager, @service_container, %fos_user.model.user.class%]

@@ -15,9 +15,10 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
-users:
+api:
     type:   rest
-    resource:   "@SubwayBuddyUserBundle/Controller/UserController.php"
+    resource:   "@SubwayBuddyUserBundle/Controller/APIController.php"
+    prefix: /api
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

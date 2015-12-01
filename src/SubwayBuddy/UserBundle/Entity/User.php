@@ -2,6 +2,7 @@
 
 namespace SubwayBuddy\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -22,9 +23,15 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Travel", mappedBy="user")
+     */
+    public $travels;
+
     public function __construct()
     {
         parent::__construct();
+        $this->travels = new ArrayCollection();
     }
 
     /**
@@ -35,6 +42,30 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTravels()
+    {
+        return $this->travels;
+    }
+
+    /**
+     * @param mixed $travels
+     */
+    public function setTravels($travels)
+    {
+        $this->travels = $travels;
+    }
+
+    /**
+     * @param Travel $travel
+     */
+    public function addTravel($travel)
+    {
+        $this->travels->add($travel);
     }
 }
 

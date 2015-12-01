@@ -2,12 +2,31 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>{% block title %}SubwayBuddy{% endblock %}</title>
+        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">#}
+        {#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">#}
+        {% stylesheets 'bundles/subwaybuddyuser/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+        {% endstylesheets %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        {% javascripts '@SubwayBuddyUserBundle/Resources/public/js/*' %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+            {#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>#}
+            {#<script src="{{ asset('bundles/subwaybuddyuser/js/jquery.min.js') }}" type="text/javascript" />#}
+            {#<script src="{{ asset('bundles/subwaybuddyuser/js/modernizr.custom.js') }}" type="text/javascript" />#}
+            {#<script src="{{ asset('bundles/subwaybuddyuser/js/bootstrap.js') }}" type="text/javascript" />#}
+            {#<script src="{{ asset('bundles/subwaybuddyuser/js/plugins.js') }}" type="text/javascript" />#}
+            {#<script src="{{ asset('bundles/subwaybuddyuser/js/jquery.themepunch.revolution.min.js') }}" type="text/javascript" />#}
+            {#<script src="{{ asset('bundles/subwaybuddyuser/js/custom.js') }}" type="text/javascript" />#}
+            {#<script src="{{ asset('bundles/subwaybuddyuser/js/respond.min.js') }}" type="text/javascript" />#}
+        {% block javascripts %}
+        {% endblock %}
     </body>
 </html>
