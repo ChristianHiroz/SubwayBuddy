@@ -34,7 +34,7 @@ class APIController extends FOSRestController
      *
      * @return View
      */
-    public function travelAction(ParamFetcher $paramFetcher)
+    public function postTravelAction(ParamFetcher $paramFetcher)
     {
 
         $name = $paramFetcher->get('name');

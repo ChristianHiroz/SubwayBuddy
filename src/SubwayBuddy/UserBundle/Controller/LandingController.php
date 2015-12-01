@@ -16,6 +16,20 @@ class LandingController extends Controller
     {
         return array(
                 // ...
-            );    }
+            );
+    }
+
+    /**
+     * @Route("/ws")
+     * @Template()
+     */
+    public function wsAction()
+    {
+        return array(
+                // ...
+
+                );
+    }
+
 
 }
