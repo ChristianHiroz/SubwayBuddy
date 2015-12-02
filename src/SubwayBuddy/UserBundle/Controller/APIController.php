@@ -59,7 +59,6 @@ class APIController extends FOSRestController
         $em->flush();
 
         $view = Vieww::create();
-
         $view->setData($travel)->setStatusCode(200);
 
         return $view;
@@ -139,8 +138,8 @@ class APIController extends FOSRestController
         $travel->setName($name);
         $travel->setTime($time);
         $user->addTravel($travel);
-        $em = $this->getDoctrine()->getManager();
 
+        $em = $this->getDoctrine()->getManager();
         $em->persist($travel);
         $em->flush();
 
@@ -264,6 +263,65 @@ class APIController extends FOSRestController
         $view = Vieww::create();
         $view->setData($entity)->setStatusCode(200);
         return $view;
+    }
+
+    /**
+     * Create a User from the submitted data.<br/>
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="subject", nullable=false, strict=true, description="Subject.")
+     * @RequestParam(name="number", nullable=false, strict=true, description="Subject's priority.")
+     * @RequestParam(name="travel", nullable=false, strict=true, description="Travel id.")
+     * @RequestParam(name="subject", nullable=false, strict=true, description="Subject id.")
+     * @Put
+     *
+     * @return View
+     */
+    public function putSubjectsAction(ParamFetcher $paramFetcher)
+    {
+        $subjectStr = $paramFetcher->get('subject');
+        $number = $paramFetcher->get('number');
+        $subject = $paramFetcher->get('subject');
+        $travel = $paramFetcher->get('travel');
+
+        $travel  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:Travel')->find($travel);
+
+        $subject  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:Subject')->find($subject);
+
+        $subject->setSubject($subjectStr);
+        $subject->setNumber($number);
+        $subject->setTravel($travel);
+        $travel->addSubject($subject);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($travel);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData($travel)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * @return array
+     * @View()
+     */
+    public function deleteSubjectsAction(Subject $subject){
+        $em = $this->getDoctrine()->getManager();
+        $entity  =  $em->getRepository('SubwayBuddyUserBundle:Subject')->find($subject);
+
+        $em->remove($entity);
+        $em->flush();
+
+        $message = "Subject deleted !";
+
+        $view = Vieww::create();
+        $view->setData($message)->setStatusCode(200);
+
+        return $view;
+
     }
     //</editor-fold>
 

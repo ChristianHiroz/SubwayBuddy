@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/APIController.php" line="304" />
+    <bookmark url="file://$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/APIController.php" line="362" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20bcf615-5b8a-4180-976a-08ef8dfcebf6" name="Default" comment="" />
@@ -38,16 +38,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="APIController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="APIController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/APIController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.807693" vertical-offset="1681" max-vertical-offset="4114">
-              <caret line="155" column="7" selection-start-line="154" selection-start-column="13" selection-end-line="155" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.33333334" vertical-offset="4125" max-vertical-offset="5100">
+              <caret line="291" column="40" selection-start-line="291" selection-start-column="40" selection-end-line="291" selection-end-column="40" />
               <folding>
-                <element signature="e#2567#2714#0#PHP" expanded="false" />
-                <element signature="e#2827#2970#0#PHP" expanded="false" />
-                <element signature="e#2975#3399#0#PHP" expanded="false" />
-                <element signature="e#7930#7957#0#PHP" expanded="false" />
+                <element signature="e#2566#2713#0#PHP" expanded="false" />
+                <element signature="e#2826#2969#0#PHP" expanded="false" />
+                <element signature="e#2974#3398#0#PHP" expanded="false" />
+                <element signature="e#8800#8830#1#PHP" expanded="true" />
+                <element signature="e#8926#8957#1#PHP" expanded="true" />
+                <element signature="e#9845#9872#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -73,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ws.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ws.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Resources/views/Landing/ws.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.92177916" vertical-offset="1150" max-vertical-offset="3468">
-              <caret line="103" column="51" selection-start-line="103" selection-start-column="51" selection-end-line="103" selection-end-column="51" />
+            <state vertical-scroll-proportion="-10.927273" vertical-offset="2272" max-vertical-offset="3706">
+              <caret line="169" column="42" selection-start-line="169" selection-start-column="42" selection-end-line="169" selection-end-column="42" />
               <folding>
                 <element signature="e#154#172#0#HTML" expanded="true" />
                 <element signature="e#2065#2083#0#HTML" expanded="true" />
@@ -134,8 +136,8 @@
         <option value="$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/LandingController.php" />
         <option value="$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Resources/views/Landing/index.html.twig" />
         <option value="$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Resources/views/Landing/wh.html.twig" />
-        <option value="$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/APIController.php" />
         <option value="$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Resources/views/Landing/ws.html.twig" />
+        <option value="$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/APIController.php" />
       </list>
     </option>
   </component>
@@ -929,27 +931,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/APIController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.807693" vertical-offset="1681" max-vertical-offset="4114">
-          <caret line="155" column="7" selection-start-line="154" selection-start-column="13" selection-end-line="155" selection-end-column="7" />
-          <folding>
-            <element signature="e#2567#2714#0#PHP" expanded="false" />
-            <element signature="e#2827#2970#0#PHP" expanded="false" />
-            <element signature="e#2975#3399#0#PHP" expanded="false" />
-            <element signature="e#7930#7957#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Resources/views/Landing/ws.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.92177916" vertical-offset="1150" max-vertical-offset="3468">
-          <caret line="103" column="51" selection-start-line="103" selection-start-column="51" selection-end-line="103" selection-end-column="51" />
+        <state vertical-scroll-proportion="-10.927273" vertical-offset="2272" max-vertical-offset="3706">
+          <caret line="169" column="42" selection-start-line="169" selection-start-column="42" selection-end-line="169" selection-end-column="42" />
           <folding>
             <element signature="e#154#172#0#HTML" expanded="true" />
             <element signature="e#2065#2083#0#HTML" expanded="true" />
             <element signature="e#4930#4948#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SubwayBuddy/UserBundle/Controller/APIController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="4125" max-vertical-offset="5100">
+          <caret line="291" column="40" selection-start-line="291" selection-start-column="40" selection-end-line="291" selection-end-column="40" />
+          <folding>
+            <element signature="e#2566#2713#0#PHP" expanded="false" />
+            <element signature="e#2826#2969#0#PHP" expanded="false" />
+            <element signature="e#2974#3398#0#PHP" expanded="false" />
+            <element signature="e#8800#8830#1#PHP" expanded="true" />
+            <element signature="e#8926#8957#1#PHP" expanded="true" />
+            <element signature="e#9845#9872#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -155,6 +155,20 @@
                     <td>travelId (int : travelId)</td>
                     <td>Code 200: subjects (list Subject)</td>
                 </tr>
+                <tr class="active">
+                    <td>Subject update</td>
+                    <td>PUT</td>
+                    <td>/api/subjects</td>
+                    <td>subject (String) number (int) travel (int : travelId) subject (int : subjectId)</td>
+                    <td>Code 200: subject (Subject)</td>
+                </tr>
+                <tr class="danger">
+                    <td>Subject delete</td>
+                    <td>DELETE</td>
+                    <td>/api/subjects/{subjectId}</td>
+                    <td>v (int : subjectId)</td>
+                    <td>Code 200: "Subject deleted!"</td>
+                </tr>
               </table>
           </div>
           <div class="modal-footer">
