@@ -150,6 +150,26 @@ class APIController extends FOSRestController
         return $view;
     }
 
+    /**
+     * @return array
+     * @View()
+     */
+    public function deleteTravelsAction(Travel $travel){
+        $em = $this->getDoctrine()->getManager();
+        $entity  =  $em->getRepository('SubwayBuddyUserBundle:Travel')->find($travel);
+
+        $em->remove($entity);
+        $em->flush();
+
+        $message = "Travel deleted !";
+
+        $view = Vieww::create();
+        $view->setData($message)->setStatusCode(200);
+
+        return $view;
+
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Subject">
