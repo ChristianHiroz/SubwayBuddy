@@ -1,7 +1,7 @@
 {% extends "::base.html.twig" %}
 {% block body %}
     <div class="modal fade" id="userModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="width:80%;">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -11,8 +11,8 @@
               <table class="table table-condensed">
                <tr>
                   <th>Nom</th>
-                  <th>Url</th>
                   <th>Méthode</th>
+                  <th>Url</th>
                   <th>Paramètre</th>
                   <th>Retour</th>
               </tr>
@@ -46,7 +46,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <div class="modal fade" id="travelModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="width:80%;">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -56,8 +56,8 @@
               <table class="table table-condensed">
                <tr>
                   <th>Nom</th>
-                  <th>Url</th>
                   <th>Méthode</th>
+                  <th>Url</th>
                   <th>Paramètre</th>
                   <th>Retour</th>
               </tr>
@@ -89,6 +89,13 @@
                     <td>userId (int : userId)</td>
                     <td>Code 200: travels (list Travel)</td>
                 </tr>
+                <tr class="active">
+                    <td>Travel update</td>
+                    <td>POST</td>
+                    <td>/api/travels</td>
+                    <td>name (String) time (DateTime format 2012-07-08 11:14:15) user (int : userId) travel (int : travelId)</td>
+                    <td>Code 200: travel (Travel)</td>
+                </tr>
               </table>
           </div>
           <div class="modal-footer">
@@ -98,7 +105,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <div class="modal fade" id="subjectModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="width:80%;">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -108,8 +115,8 @@
               <table class="table table-condensed">
                <tr>
                   <th>Nom</th>
-                  <th>Url</th>
                   <th>Méthode</th>
+                  <th>Url</th>
                   <th>Paramètre</th>
                   <th>Retour</th>
               </tr>

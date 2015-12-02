@@ -110,6 +110,46 @@ class APIController extends FOSRestController
         $view->setData($entity)->setStatusCode(200);
         return $view;
     }
+
+    /**
+     * Create a User from the submitted data.<br/>
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="name", nullable=false, strict=true, description="Travel name.")
+     * @RequestParam(name="time", nullable=false, strict=true, description="Travel date.")
+     * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
+     * @RequestParam(name="travel", nullable=false, strict=true, description="Travel id.")
+     * @Put
+     *
+     * @return View
+     */
+    public function putTravelsAction(ParamFetcher $paramFetcher)
+    {
+        $name = $paramFetcher->get('name');
+        $time = $paramFetcher->get('time');
+        $user = $paramFetcher->get('user');
+        $travel = $paramFetcher->get('travel');
+
+        $user  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->find($user);
+        $travel  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:Travel')->find($travel);
+
+        $time = new \DateTime($time);
+        $travel->setUser($user);
+        $travel->setName($name);
+        $travel->setTime($time);
+        $user->addTravel($travel);
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($travel);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData($travel)->setStatusCode(200);
+
+        return $view;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Subject">
@@ -220,7 +260,7 @@ class APIController extends FOSRestController
      *
      * @return View
      */
-    public function postUsersAction(ParamFetcher $paramFetcher)
+     public function postUsersAction(ParamFetcher $paramFetcher)
     {
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->createUser();
