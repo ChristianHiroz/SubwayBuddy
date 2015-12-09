@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {{ parents() }}
+    <h1>Travel creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('travel') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
