@@ -1,17 +1,25 @@
 Staff
 ========================
 
-Jean-Baptiste Chauvin - Android developper
-Kugasanth Kugathasan - Android developper
-Momar Kebe - Scrum Master/ Integrator
-Christian Hiroz - Product owner/ Symfony2 developper
+
+  * Jean-Baptiste Chauvin - Android developper
+
+  * Kugasanth Kugathasan - Android developper
+
+  * Momar Kebe - Scrum Master/ Integrator
+
+  * Christian Hiroz - Product owner/ Symfony2 developper
 
 Documents
 ========================
-Backlog : https://trello.com/b/L1JCkY0U/subwaybuddy
-API documentation : http://christian-hiroz.com/SubwayBuddy/web/app_dev.php/ws
-Github Android https://github.com/Miage-Paris-Ouest/m2c20152016-subwaybuddy-android
-Github API https://github.com/Miage-Paris-Ouest/m2c20152016-subwaybuddy-web
+
+  * Backlog : https://trello.com/b/L1JCkY0U/subwaybuddy
+
+  * API documentation : http://christian-hiroz.com/SubwayBuddy/web/app_dev.php/ws
+
+  * Github Android https://github.com/Miage-Paris-Ouest/m2c20152016-subwaybuddy-android
+
+  * Github API https://github.com/Miage-Paris-Ouest/m2c20152016-subwaybuddy-web
 
 What's inside?
 ========================
@@ -36,10 +44,10 @@ It comes pre-configured with the following bundles:
 It comes with the following added bundles:
 
   * [**FOSUserBundle**][9] - Adds basic user handling with groups and roles
-  * 
+  
   * [**FOSRestBundle**][10] - Library for REST API
-  * 
+   
   * [**SonataAdminBundle**][11] - Admin interface generation, working with [9]
-  * 
+  
   * [**FOSElasticaBundle**][12] - Library for Elastica
   
