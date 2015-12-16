@@ -38,15 +38,15 @@ class User extends BaseUser
     public $chatrooms;
 
     /**
-     * @ManyToMany(targetEntity="User", mappedBy="myFriends")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
      **/
     private $buddysWithMe;
 
     /**
-     * @ManyToMany(targetEntity="User", inversedBy="buddysWithME")
-     * @JoinTable(name="buddys",
-     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="buddy_user_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="buddysWithME")
+     * @ORM\JoinTable(name="buddys",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="buddy_user_id", referencedColumnName="id")}
      *      )
      **/
     private $myBuddys;
