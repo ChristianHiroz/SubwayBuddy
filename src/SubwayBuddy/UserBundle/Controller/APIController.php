@@ -9,6 +9,8 @@ use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use SubwayBuddy\UserBundle\Entity\Chatroom;
+use SubwayBuddy\UserBundle\Entity\Message;
 use SubwayBuddy\UserBundle\Entity\Subject;
 use SubwayBuddy\UserBundle\Entity\Travel;
 use SubwayBuddy\UserBundle\Entity\User as User;
@@ -111,7 +113,7 @@ class APIController extends FOSRestController
     }
 
     /**
-     * Create a User from the submitted data.<br/>
+     * Update a Travel from the submitted data.<br/>
      *
      * @param ParamFetcher $paramFetcher Paramfetcher
      *
@@ -152,6 +154,7 @@ class APIController extends FOSRestController
     /**
      * @return array
      * @View()
+     * @ParamConverter("travel", class="SubwayBuddyUserBundle:Travel")
      */
     public function deleteTravelsAction(Travel $travel){
         $em = $this->getDoctrine()->getManager();
@@ -414,4 +417,138 @@ class APIController extends FOSRestController
         return $this->container->get('subwaybuddy_user.user_service')->login($username, $password);
     }
     //</editor-fold>
+
+////<editor-fold desc="Chat">
+    /**
+     * Create ChatRoom
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="name", nullable=false, strict=true, description="Chatroom name.")
+     * @RequestParam(name="description", nullable=false, strict=true, description="Chatroom description.")
+     * @RequestParam(name="user1", nullable=false, strict=true, description="User 1 id.")
+     * @RequestParam(name="user2", nullable=false, strict=true, description="User 2 id.")
+     * @Post
+     * @View()
+     *
+     * @return View
+     */
+    public function postChatroomAction(ParamFetcher $paramFetcher)
+    {
+
+        $name = $paramFetcher->get('name');
+        $description = $paramFetcher->get('description');
+        $user1 = $paramFetcher->get('user1');
+        $user2 = $paramFetcher->get('user2');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user1 =  $em->getRepository('SubwayBuddyUserBundle:User')->find($user1);
+        $user2 =  $em->getRepository('SubwayBuddyUserBundle:User')->find($user2);
+
+        $chatroom = new Chatroom();
+        $chatroom->addUser($user1);
+        $chatroom->addUser($user2);
+        $user1->addChatroom($chatroom);
+        $user2->addChatroom($chatroom);
+        $chatroom->setName($name);
+        $chatroom->setDescription($description);
+
+        $em->persist($chatroom);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData($chatroom)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * @return array
+     * @View()
+     */
+    public function getChatroomsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entitys  =  $em->getRepository('SubwayBuddyUserBundle:Chatroom')->findAll();
+        if (!$entitys) {
+            throw $this->createNotFoundException('Data not found.');
+        }
+        $view = Vieww::create();
+        $view->setData($entitys)->setStatusCode(200);
+        return $view;
+    }
+
+        /**
+     * @param Travel $travel
+     * @return array
+     * @View()
+     * @ParamConverter("chatroom", class="SubwayBuddyUserBundle:Chatroom")
+     */
+    public function getChatroomAction(Chatroom $chatroom)
+    {
+        return array('chatroom' => $chatroom);
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     * @View()
+     * @ParamConverter("user", class="SubwayBuddyUserBundle:User")
+     */
+    public function getUserChatroomsAction(User $user)
+    {
+        $entitys  =  $user->getChatrooms();
+        if (!$entitys) {
+            throw $this->createNotFoundException('Data not found.');
+        }
+        $view = Vieww::create();
+        $view->setData($entitys)->setStatusCode(200);
+        return $view;
+    }
+
+    /**
+     * Create Message
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="texte", nullable=false, strict=true, description="Message text.")
+     * @RequestParam(name="user", nullable=false, strict=true, description="Message user.")
+     * @RequestParam(name="chatroom", nullable=false, strict=true, description="Message chatroom.")
+     * @Post
+     * @View()
+     *
+     * @return View
+     */
+    public function postMessageAction(ParamFetcher $paramFetcher)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $texte = $paramFetcher->get('texte');
+        $user = $paramFetcher->get('user');
+        $chatroom = $paramFetcher->get('chatroom');
+
+        $user = $em->getRepository('SubwayBuddyUserBundle:User')->find($user);
+        $chatroom = $em->getRepository('SubwayBuddyUserBundle:Chatroom')->find($chatroom);
+
+        $message = new Message();
+
+        $message->setTexte($texte);
+        $message->setUser($user);
+        $message->setChatroom($chatroom);
+        $chatroom->addMessage($message);
+
+        $em->persist($message);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData($message)->setStatusCode(200);
+
+        return $view;
+    }
+//</editor-fold>
+
+
+
+
 }

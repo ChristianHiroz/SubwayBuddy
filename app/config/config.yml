@@ -118,6 +118,13 @@ fos_rest:
     routing_loader:
         default_format: json
 
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app:
+            index_name: app_%kernel.environment%
+
 fos_oauth_server:
     db_driver:           orm
     client_class:        SubwayBuddy\UserBundle\Entity\User

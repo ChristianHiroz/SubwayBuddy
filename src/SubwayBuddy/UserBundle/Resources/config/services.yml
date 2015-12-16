@@ -17,3 +17,5 @@ services:
     subwaybuddy_user.user_service:
          class: SubwayBuddy\UserBundle\Handler\UserHandler
          arguments: [ @doctrine.orm.entity_manager, @service_container, %fos_user.model.user.class%]
+#    subwaybuddy_sncf_api:
+#          class: SubwayBuddy\UserBundle\Services\SNCFAPI

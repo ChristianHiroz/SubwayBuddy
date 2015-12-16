@@ -24,14 +24,24 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Travel", mappedBy="user")
      */
     public $travels;
+
+    /**
+     * @var ArrayCollection
+     *
+     *@ORM\ManyToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Chatroom", inversedBy="users")
+     */
+    public $chatrooms;
 
     public function __construct()
     {
         parent::__construct();
         $this->travels = new ArrayCollection();
+        $this->chatrooms = new ArrayCollection();
     }
 
     /**
@@ -66,6 +76,29 @@ class User extends BaseUser
     public function addTravel($travel)
     {
         $this->travels->add($travel);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChatrooms()
+    {
+        return $this->chatrooms;
+    }
+
+    /**
+     * @param ArrayCollection $chatrooms
+     */
+    public function setChatrooms($chatrooms)
+    {
+        $this->chatrooms = $chatrooms;
+    }
+
+    /**
+     * @param ChatRoom $chatroom
+     */
+    public function addChatroom($chatroom){
+        $this->chatrooms[] = $chatroom;
     }
 }
 

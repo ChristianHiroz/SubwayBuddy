@@ -42,7 +42,7 @@ class Travel
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Subject", mappedBy="travel")
+     * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Subject", mappedBy="travel", cascade={"remove"})
      */
     private $subjects;
 

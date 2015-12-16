@@ -91,7 +91,7 @@
                 </tr>
                 <tr class="active">
                     <td>Travel update</td>
-                    <td>POST</td>
+                    <td>PUT</td>
                     <td>/api/travels</td>
                     <td>name (String) time (DateTime format 2012-07-08 11:14:15) user (int : userId) travel (int : travelId)</td>
                     <td>Code 200: travel (Travel)</td>
@@ -177,6 +177,65 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div class="modal fade" id="chatRoomModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" style="width:80%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">User API</h4>
+          </div>
+          <div class="modal-body">
+              <table class="table table-condensed">
+               <tr>
+                  <th>Nom</th>
+                  <th>Méthode</th>
+                  <th>Url</th>
+                  <th>Paramètre</th>
+                  <th>Retour</th>
+              </tr>
+              <tr class="active">
+                    <td>Chatroom creation</td>
+                    <td>POST</td>
+                    <td>/api/chatrooms</td>
+                    <td>name (String) description (String) user1 (int : userId) user2 (int : userId)</td>
+                    <td>Code 200: chatroom (ChatRoom)</td>
+                </tr>
+              <tr class="danger">
+                    <td>Message creation</td>
+                    <td>POST</td>
+                    <td>/api/messages</td>
+                    <td>texte (String) chatroom (int : chatroomId) user (int : userId)</td>
+                    <td>Code 200: message (Message)</td>
+                </tr>
+                <tr class="success">
+                    <td>Chatrooms list</td>
+                    <td>GET</td>
+                    <td>/api/chatrooms</td>
+                    <td>None</td>
+                    <td>Code 200: chatRooms (list Chatroom)</td>
+                </tr>
+                <tr class="info">
+                    <td>Chatrooms select</td>
+                    <td>GET</td>
+                    <td>/api/chatrooms/{chatRoom}</td>
+                    <td>chatRoom (int : chatRoomId)</td>
+                    <td>Code 200: chatRoom (Chatroom)</td>
+                </tr>
+                <tr class="active">
+                    <td>Chatrooms list by User</td>
+                    <td>GET</td>
+                    <td>/api/users/{userId}/chatrooms</td>
+                    <td>userId (int : userId)</td>
+                    <td>Code 200: chatRooms (list Chatrooms)</td>
+                </tr>
+              </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <section id="header">
         <img style="width:auto;height: 150px; float:left;"src="{{ asset('bundles/subwaybuddyuser/images/subwwaybuddy.png') }}"/>
         <div class="container">
@@ -200,6 +259,7 @@
                         <li class="active" data-toggle="modal" data-target="#userModal"><a href="#">User <span class="sr-only">(current)</span></a></li>
                         <li><a href="#" data-toggle="modal" data-target="#travelModal">Travel</a></li>
                         <li class="active" data-toggle="modal" data-target="#subjectModal"><a href="#">Subject <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#chatRoomModal">ChatRoom <span class="sr-only">(current)</span></a></li>
                       </ul>
                     </div><!-- /.navbar-collapse -->
                   </div><!-- /.container-fluid -->

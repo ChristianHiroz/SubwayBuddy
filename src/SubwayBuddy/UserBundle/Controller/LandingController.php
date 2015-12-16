@@ -14,6 +14,7 @@ class LandingController extends Controller
      */
     public function indexAction()
     {
+
         return array(
                 // ...
             );
