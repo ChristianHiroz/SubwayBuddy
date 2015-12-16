@@ -37,11 +37,26 @@ class User extends BaseUser
      */
     public $chatrooms;
 
-    public function __construct()
-    {
+    /**
+     * @ManyToMany(targetEntity="User", mappedBy="myFriends")
+     **/
+    private $buddysWithMe;
+
+    /**
+     * @ManyToMany(targetEntity="User", inversedBy="buddysWithME")
+     * @JoinTable(name="buddys",
+     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="buddy_user_id", referencedColumnName="id")}
+     *      )
+     **/
+    private $myBuddys;
+
+    public function __construct() {
         parent::__construct();
         $this->travels = new ArrayCollection();
         $this->chatrooms = new ArrayCollection();
+        $this->buddysWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myBuddys = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -100,5 +115,48 @@ class User extends BaseUser
     public function addChatroom($chatroom){
         $this->chatrooms[] = $chatroom;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMyBuddys()
+    {
+        return $this->myBuddys;
+    }
+
+    /**
+     * @param mixed $myBuddys
+     */
+    public function setMyBuddys($myBuddys)
+    {
+        $this->myBuddys = $myBuddys;
+    }
+
+    public function addBuddy(User $buddy){
+        $this->myBuddys[] = $buddy;
+        $buddy->addBuddyWithMe($this);
+    }
+
+    public function addBuddyWithMe($buddy){
+        $this->buddysWithMe[] = $buddy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuddysWithMe()
+    {
+        return $this->buddysWithMe;
+    }
+
+    /**
+     * @param mixed $buddysWithMe
+     */
+    public function setBuddysWithMe($buddysWithMe)
+    {
+        $this->buddysWithMe = $buddysWithMe;
+    }
+
+
 }
 

@@ -12,7 +12,10 @@
         {% endstylesheets %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    {# comment until OK #}
+    {#{% include "::header.html.twig" %}#}
+        {% block body %}
+        {% endblock %}
 
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         {% javascripts '@SubwayBuddyUserBundle/Resources/public/js/*' %}

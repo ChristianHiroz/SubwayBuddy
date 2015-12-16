@@ -127,7 +127,7 @@ RESPONSIVE
 ANIMATIONS
 *******************************************************************************************************************************/
 .animated {
-    opacity: 0.8;
+    opacity: 0;
     -webkit-animation-duration: 1s;
        -moz-animation-duration: 1s;
          -o-animation-duration: 1s;
@@ -211,15 +211,19 @@ ANIMATIONS
 }
 @-webkit-keyframes InfiniteTurn {
     0% { -webkit-transform: rotate(0deg);}
-    100% { -webkit-transform: rotate(360deg);}
+    100% { -webkit-transform: rotate(360deg);};
 }
 @-moz-keyframes InfiniteTurn {
     0% { -moz-transform: rotate(0deg);}
-    100% { -moz-transform: rotate(360deg);}
+    100% { -moz-transform: rotate(360deg);};
 }
 @-o-keyframes InfiniteTurn {
     0% { -o-transform: rotate(0deg);}
-    100% { -o-transform: rotate(360deg);}
+    100% { -o-transform: rotate(360deg);};
+}
+@-keyframes InfiniteTurn {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);};
 }
 
 @-webkit-keyframes bounceInLeft {
