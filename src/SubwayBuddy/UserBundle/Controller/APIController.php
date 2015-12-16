@@ -2,6 +2,7 @@
 
 namespace SubwayBuddy\UserBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
@@ -418,7 +419,7 @@ class APIController extends FOSRestController
     }
     //</editor-fold>
 
-////<editor-fold desc="Chat">
+    ////<editor-fold desc="Chat">
     /**
      * Create ChatRoom
      *
@@ -547,6 +548,76 @@ class APIController extends FOSRestController
         return $view;
     }
 //</editor-fold>
+
+    //<editor-fold desc="Buddy matching">
+    //TODO : addFriend
+    /**
+     * @param Travel $travel
+     * @return array
+     * @View()
+     * @ParamConverter("travel", class="SubwayBuddyUserBundle:Travel")
+     */
+    public function getMatchingAction(Travel $travel)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $matchedUsersArray  =  $em->getRepository('SubwayBuddyUserBundle:Travel')->match($travel);
+        if (!$matchedUsersArray) {
+            throw $this->createNotFoundException('Aucuns matchs.');
+        }
+        $matchedUsers = new ArrayCollection();
+        foreach($matchedUsersArray as $matchedUser){
+            $matchedUsers[] = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[1]);
+        }
+
+        $view = Vieww::create();
+        $view->setData($matchedUsers)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * Update a User to add a friend data.<br/>
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
+     * @RequestParam(name="buddy", nullable=false, strict=true, description="User buddy id.")
+     * @Put
+     *
+     * @return View
+     */
+    public function putBuddyAction(ParamFetcher $paramFetcher)
+    {
+        $id = $paramFetcher->get('user');
+        $idBuddy = $paramFetcher->get('buddy');
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->find($id);
+        $buddy  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->find($idBuddy);
+        $user->addBuddy($buddy);
+        $view = Vieww::create();
+        $userManager->updateUser($user);
+        $view->setData($user)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     * @View()
+     * @ParamConverter("user", class="SubwayBuddyUserBundle:User")
+     */
+    public function getBuddyAction(User $user){
+        $buddys = $user->getMyBuddys();
+
+        $view = Vieww::create();
+        $view->setData($buddys)->setStatusCode(200);
+
+        return $view;
+    }
+    //</editor-fold>
+
+
 
 
 

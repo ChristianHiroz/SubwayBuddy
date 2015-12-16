@@ -38,7 +38,7 @@ class User extends BaseUser
     public $chatrooms;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="myBuddys")
      **/
     private $buddysWithMe;
 
