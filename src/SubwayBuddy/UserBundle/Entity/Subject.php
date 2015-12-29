@@ -36,9 +36,9 @@ class Subject
     private $number;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SubwayBuddy\UserBundle\Entity\Travel", inversedBy="subjects")
+     * @ORM\ManyToOne(targetEntity="SubwayBuddy\UserBundle\Entity\User", inversedBy="subjects")
      */
-    private $travel;
+    private $user;
 
     /**
      * Get id
@@ -99,19 +99,19 @@ class Subject
     }
 
     /**
-     * @return mixed
+     * @return User
      */
-    public function getTravel()
+    public function getUser()
     {
-        return $this->travel;
+        return $this->user;
     }
 
     /**
-     * @param mixed $travel
+     * @param mixed $user
      */
-    public function setTravel($travel)
+    public function setUser($user)
     {
-        $this->travel = $travel;
+        $this->user = $user;
     }
 }
 

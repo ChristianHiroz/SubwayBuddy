@@ -15,8 +15,7 @@ class TravelAdmin extends Admin
         $formMapper
             ->add('name', 'text', array('label' => 'Nom du trajet'))
             ->add('time', 'date', array('label' => 'Horaire du trajet'))
-            ->add('user', 'sonata_type_model', array('label' => 'Utilisateur'))
-            ->add('subjects', 'sonata_type_model', array('label' => 'Sujets de discussion', 'by_reference' => true,'multiple' => true,'required' => false));
+            ->add('user', 'sonata_type_model', array('label' => 'Utilisateur'));
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

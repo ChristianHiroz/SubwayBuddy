@@ -131,7 +131,7 @@
                     <td>Subject creation</td>
                     <td>POST</td>
                     <td>/api/subjects</td>
-                    <td>subject (String) number (int) travel (int : travelId)</td>
+                    <td>subject (String) number (int) user (int : userId)</td>
                     <td>Code 200: subject (Subject)</td>
                 </tr>
                 <tr class="danger">
@@ -149,24 +149,24 @@
                     <td>Code 200: subject (Subject)</td>
                 </tr>
                 <tr class="info">
-                    <td>Subject list by Travel</td>
+                    <td>Subject list by User</td>
                     <td>GET</td>
-                    <td>/api/travels/{travelId}subjects/</td>
-                    <td>travelId (int : travelId)</td>
+                    <td>/api/users/{userId}subjects/</td>
+                    <td>userId (int : userId)</td>
                     <td>Code 200: subjects (list Subject)</td>
                 </tr>
                 <tr class="active">
                     <td>Subject update</td>
                     <td>PUT</td>
                     <td>/api/subjects</td>
-                    <td>subject (String) number (int) travel (int : travelId) subject (int : subjectId)</td>
+                    <td>subject (String) number (int) user (int : userId) subject (int : subjectId)</td>
                     <td>Code 200: subject (Subject)</td>
                 </tr>
                 <tr class="danger">
                     <td>Subject delete</td>
                     <td>DELETE</td>
                     <td>/api/subjects/{subjectId}</td>
-                    <td>v (int : subjectId)</td>
+                    <td>subjectId (int : subjectId)</td>
                     <td>Code 200: "Subject deleted!"</td>
                 </tr>
               </table>
@@ -182,7 +182,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">User API</h4>
+            <h4 class="modal-title">Chatroom API</h4>
           </div>
           <div class="modal-body">
               <table class="table table-condensed">
@@ -236,6 +236,89 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div class="modal fade" id="buddyModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" style="width:80%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Buddy API</h4>
+          </div>
+          <div class="modal-body">
+              <table class="table table-condensed">
+               <tr>
+                  <th>Nom</th>
+                  <th>Méthode</th>
+                  <th>Url</th>
+                  <th>Paramètre</th>
+                  <th>Retour</th>
+              </tr>
+              <tr class="active">
+                    <td>Buddy add</td>
+                    <td>PUT</td>
+                    <td>/api/buddy</td>
+                    <td>user (int : userId) buddy (int : userId)</td>
+                    <td>Code 200: user (User)</td>
+                </tr>
+              <tr class="danger">
+                    <td>Buddy list by user</td>
+                    <td>POST</td>
+                    <td>/api/buddies/{user}</td>
+                    <td>user (int: userId)</td>
+                    <td>Code 200: users (Users)</td>
+                </tr>
+              </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="matchingModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" style="width:80%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Matching API</h4>
+          </div>
+          <div class="modal-body">
+              <table class="table table-condensed">
+               <tr>
+                  <th>Nom</th>
+                  <th>Méthode</th>
+                  <th>Url</th>
+                  <th>Paramètre</th>
+                  <th>Retour</th>
+              </tr>
+              <tr class="active">
+                    <td>Matching by Travel</td>
+                    <td>GET</td>
+                    <td>/api/matchings/{travel}/by/travel</td>
+                    <td>travel (int : travelId)</td>
+                    <td>Code 200: matchedUsers (list User)</td>
+                </tr>
+              <tr class="danger">
+                    <td>Matching by Subject</td>
+                    <td>GET</td>
+                    <td>/api/matchings/{subject}/by/subject</td>
+                    <td>subject (int : subjectId)</td>
+                    <td>Code 200: matchedUsers (list User)</td>
+                </tr>
+              <tr class="info">
+                    <td>Matching</td>
+                    <td>GET</td>
+                    <td>/api/matchings/{travel}/{subject}</td>
+                    <td>travel (int : travelId) subject (int : subjectId)</td>
+                    <td>Code 200: matchedUsers (list User)</td>
+                </tr>
+              </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <section id="header">
         <img style="width:auto;height: 150px; float:left;"src="{{ asset('bundles/subwaybuddyuser/images/subwwaybuddy.png') }}"/>
         <div class="container">
@@ -260,6 +343,8 @@
                         <li><a href="#" data-toggle="modal" data-target="#travelModal">Travel</a></li>
                         <li class="active" data-toggle="modal" data-target="#subjectModal"><a href="#">Subject <span class="sr-only">(current)</span></a></li>
                         <li><a href="#" data-toggle="modal" data-target="#chatRoomModal">ChatRoom <span class="sr-only">(current)</span></a></li>
+                        <li class="active" data-toggle="modal" data-target="#buddyModal"><a href="#">Subject <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#matchingModal">ChatRoom <span class="sr-only">(current)</span></a></li>
                       </ul>
                     </div><!-- /.navbar-collapse -->
                   </div><!-- /.container-fluid -->

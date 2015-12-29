@@ -41,14 +41,9 @@ class Travel
      */
     private $user;
 
-    /**
-     * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Subject", mappedBy="travel", cascade={"remove"})
-     */
-    private $subjects;
 
     public function __construct()
     {
-        $this->subjects = new ArrayCollection();
     }
 
 
@@ -126,31 +121,5 @@ class Travel
     {
         $this->user = $user;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getSubjects()
-    {
-        return $this->subjects;
-    }
-
-    /**
-     * @param mixed $subjects
-     */
-    public function setSubjects($subjects)
-    {
-        $this->subjects = $subjects;
-    }
-
-    /**
-     * @param mixed $subject
-     */
-    public function addSubject($subject)
-    {
-        $this->subjects->add($subject);
-    }
-
-
 }
 

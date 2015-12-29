@@ -16,7 +16,7 @@ class TravelRepository extends \Doctrine\ORM\EntityRepository
         'Select IDENTITY(t.user)
             From SubwayBuddyUserBundle:Travel t
             WHERE t.name = ?1
-            AND t.time = ?2
+            AND t.time LIKE ?2
             AND t.user != ?3');
 
         $query->setParameter(1,$travel->getName());

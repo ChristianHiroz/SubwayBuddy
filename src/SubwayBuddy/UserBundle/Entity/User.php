@@ -42,6 +42,12 @@ class User extends BaseUser
      **/
     private $buddysWithMe;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Subject", mappedBy="travel", cascade={"remove"})
+     */
+    private $subjects;
+
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="buddysWithME")
      * @ORM\JoinTable(name="buddys",
@@ -57,6 +63,7 @@ class User extends BaseUser
         $this->chatrooms = new ArrayCollection();
         $this->buddysWithMe = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myBuddys = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->subjects = new ArrayCollection();
     }
 
     /**
@@ -157,6 +164,28 @@ class User extends BaseUser
         $this->buddysWithMe = $buddysWithMe;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSubjects()
+    {
+        return $this->subjects;
+    }
 
+    /**
+     * @param mixed $subjects
+     */
+    public function setSubjects($subjects)
+    {
+        $this->subjects = $subjects;
+    }
+
+    /**
+     * @param mixed $subject
+     */
+    public function addSubject($subject)
+    {
+        $this->subjects->add($subject);
+    }
 }
 

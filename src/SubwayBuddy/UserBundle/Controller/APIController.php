@@ -183,7 +183,7 @@ class APIController extends FOSRestController
      *
      * @RequestParam(name="subject", nullable=false, strict=true, description="Subject to discuss.")
      * @RequestParam(name="number", nullable=false, strict=true, description="Priority for the subject.")
-     * @RequestParam(name="travel", nullable=false, strict=true, description="Travel id.")
+     * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
      * @Post
      * @View()
      *
@@ -194,12 +194,12 @@ class APIController extends FOSRestController
 
         $subjectP = $paramFetcher->get('subject');
         $number = $paramFetcher->get('number');
-        $travel = $paramFetcher->get('travel');
+        $user = $paramFetcher->get('user');
 
         $em = $this->getDoctrine()->getManager();
 
         try{
-            $travel =  $em->getRepository('SubwayBuddyUserBundle:Travel')->find($travel);
+            $user =  $em->getRepository('SubwayBuddyUserBundle:User')->find($user);
         }
         catch(Exception $e){
 
@@ -209,9 +209,9 @@ class APIController extends FOSRestController
         $subject = new Subject();
         $subject->setNumber($number);
         $subject->setSubject($subjectP);
-        $subject->setTravel($travel);
+        $subject->setUser($user);
 
-        $travel->addSubject($subject);
+        $user->addSubject($subject);
 
         $em->persist($subject);
         $em->flush();
@@ -255,12 +255,12 @@ class APIController extends FOSRestController
      * @param Subject $subject
      * @return array
      * @View()
-     * @ParamConverter("travel", class="SubwayBuddyUserBundle:Travel")
+     * @ParamConverter("user", class="SubwayBuddyUserBundle:User")
      */
-    public function getTravelSubjectAction(Travel $travel)
+    public function getUserSubjectAction(User $user)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity  =  $em->getRepository('SubwayBuddyUserBundle:Subject')->findBy(array('travel' => $travel));
+        $entity  =  $em->getRepository('SubwayBuddyUserBundle:Subject')->findBy(array('user' => $user));
         if (!$entity) {
             throw $this->createNotFoundException('Data not found.');
         }
@@ -274,9 +274,8 @@ class APIController extends FOSRestController
      *
      * @param ParamFetcher $paramFetcher Paramfetcher
      *
-     * @RequestParam(name="subject", nullable=false, strict=true, description="Subject.")
      * @RequestParam(name="number", nullable=false, strict=true, description="Subject's priority.")
-     * @RequestParam(name="travel", nullable=false, strict=true, description="Travel id.")
+     * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
      * @RequestParam(name="subject", nullable=false, strict=true, description="Subject id.")
      * @Put
      *
@@ -287,23 +286,23 @@ class APIController extends FOSRestController
         $subjectStr = $paramFetcher->get('subject');
         $number = $paramFetcher->get('number');
         $subject = $paramFetcher->get('subject');
-        $travel = $paramFetcher->get('travel');
+        $user = $paramFetcher->get('user');
 
-        $travel  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:Travel')->find($travel);
+        $user  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->find($user);
 
         $subject  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:Subject')->find($subject);
 
         $subject->setSubject($subjectStr);
         $subject->setNumber($number);
-        $subject->setTravel($travel);
-        $travel->addSubject($subject);
+        $subject->setUser($user);
+        $user->addSubject($subject);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($travel);
+        $em->persist($user);
         $em->flush();
 
         $view = Vieww::create();
-        $view->setData($travel)->setStatusCode(200);
+        $view->setData($subject)->setStatusCode(200);
 
         return $view;
     }
@@ -550,17 +549,65 @@ class APIController extends FOSRestController
 //</editor-fold>
 
     //<editor-fold desc="Buddy matching">
-    //TODO : addFriend
     /**
      * @param Travel $travel
      * @return array
      * @View()
      * @ParamConverter("travel", class="SubwayBuddyUserBundle:Travel")
      */
-    public function getMatchingAction(Travel $travel)
+    public function getMatchingByTravelAction(Travel $travel)
     {
         $em = $this->getDoctrine()->getManager();
         $matchedUsersArray  =  $em->getRepository('SubwayBuddyUserBundle:Travel')->match($travel);
+        if (!$matchedUsersArray) {
+            throw $this->createNotFoundException('Aucuns matchs.');
+        }
+        $matchedUsers = new ArrayCollection();
+        foreach($matchedUsersArray as $matchedUser){
+            $matchedUsers[] = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[1]);
+        }
+
+        $view = Vieww::create();
+        $view->setData($matchedUsers)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * @param Subject $subject
+     * @return array
+     * @View()
+     * @ParamConverter("subject", class="SubwayBuddyUserBundle:Subject")
+     */
+    public function getMatchingBySubjectAction(Subject $subject)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $matchedUsersArray  =  $em->getRepository('SubwayBuddyUserBundle:Subject')->match($subject);
+        if (!$matchedUsersArray) {
+            throw $this->createNotFoundException('Aucuns matchs.');
+        }
+        $matchedUsers = new ArrayCollection();
+        foreach($matchedUsersArray as $matchedUser){
+            $matchedUsers[] = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[1]);
+        }
+
+        $view = Vieww::create();
+        $view->setData($matchedUsers)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * @param Subject $subject
+     * @return array
+     * @View()
+     * @ParamConverter("subject", class="SubwayBuddyUserBundle:Subject")
+     * @ParamConverter("travel", class="SubwayBuddyUserBundle:Travel")
+     */
+    public function getMatchingAction(Subject $subject, Travel $travel)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $matchedUsersArray  =  $em->getRepository('SubwayBuddyUserBundle:User')->match($travel, $subject);
         if (!$matchedUsersArray) {
             throw $this->createNotFoundException('Aucuns matchs.');
         }

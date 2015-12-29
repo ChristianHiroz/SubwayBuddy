@@ -31,7 +31,7 @@ class UserAdmin extends Admin
                     'multiple' => true
                 )
             )
-        ;
+            ->add('subjects', 'sonata_type_model', array('label' => 'Sujets de discussion', 'by_reference' => true,'multiple' => true,'required' => false));
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
