@@ -273,7 +273,7 @@ class APIController extends FOSRestController
      * Create a User from the submitted data.<br/>
      *
      * @param ParamFetcher $paramFetcher Paramfetcher
-     *
+     * @RequestParam(name="subjectName", nullable=false, strict=true, description="Subject.")
      * @RequestParam(name="number", nullable=false, strict=true, description="Subject's priority.")
      * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
      * @RequestParam(name="subject", nullable=false, strict=true, description="Subject id.")
@@ -283,7 +283,7 @@ class APIController extends FOSRestController
      */
     public function putSubjectsAction(ParamFetcher $paramFetcher)
     {
-        $subjectStr = $paramFetcher->get('subject');
+        $subjectStr = $paramFetcher->get('subjectName');
         $number = $paramFetcher->get('number');
         $subject = $paramFetcher->get('subject');
         $user = $paramFetcher->get('user');
