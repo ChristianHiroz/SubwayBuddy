@@ -598,16 +598,15 @@ class APIController extends FOSRestController
     }
 
     /**
-     * @param Subject $subject
+     * @param Travel $travel
      * @return array
      * @View()
-     * @ParamConverter("subject", class="SubwayBuddyUserBundle:Subject")
      * @ParamConverter("travel", class="SubwayBuddyUserBundle:Travel")
      */
-    public function getMatchingAction(Subject $subject, Travel $travel)
+    public function getMatchingAction(Travel $travel)
     {
         $em = $this->getDoctrine()->getManager();
-        $matchedUsersArray  =  $em->getRepository('SubwayBuddyUserBundle:User')->match($travel, $subject);
+        $matchedUsersArray  =  $em->getRepository('SubwayBuddyUserBundle:User')->match($travel);
         if (!$matchedUsersArray) {
             throw $this->createNotFoundException('Aucuns matchs.');
         }

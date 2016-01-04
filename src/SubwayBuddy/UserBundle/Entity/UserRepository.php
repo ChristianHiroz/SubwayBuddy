@@ -38,8 +38,6 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
-        
-
         return $result;
     }
 }
