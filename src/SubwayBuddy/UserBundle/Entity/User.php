@@ -44,7 +44,7 @@ class User extends BaseUser
 
 
     /**
-     * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Subject", mappedBy="travel", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="SubwayBuddy\UserBundle\Entity\Subject", mappedBy="user", cascade={"remove"})
      */
     private $subjects;
 

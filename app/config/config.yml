@@ -68,6 +68,11 @@ doctrine:
         #     path:     "%database_path%"
 
     orm:
+        dql:
+            string_functions:
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                DAY: DoctrineExtensions\Query\Mysql\Day
+                YEAR: DoctrineExtensions\Query\Mysql\Year
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true

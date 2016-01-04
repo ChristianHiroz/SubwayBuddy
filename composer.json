@@ -23,7 +23,8 @@
         "friendsofsymfony/rest-bundle": "^1.7@dev",
         "jms/serializer-bundle": "^1.1",
         "friendsofsymfony/oauth-server-bundle": "^1.4",
-        "friendsofsymfony/elastica-bundle": "~3.0"
+        "friendsofsymfony/elastica-bundle": "~3.0",
+        "beberlei/DoctrineExtensions": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
