@@ -15,10 +15,12 @@ Documents
 
   * Backlog : https://trello.com/b/L1JCkY0U/subwaybuddy
 
-  * API documentation : http://christian-hiroz.com/SubwayBuddy/web/app_dev.php/ws
+  * Site vitrine : http://subwaybuddy.ovh/
+ 
+  * API documentation : http://back.subwaybuddy.ovh/ws
 
   * Github Android https://github.com/Miage-Paris-Ouest/m2c20152016-subwaybuddy-android
-
+ 
   * Github API https://github.com/Miage-Paris-Ouest/m2c20152016-subwaybuddy-web
 
 What's inside?
