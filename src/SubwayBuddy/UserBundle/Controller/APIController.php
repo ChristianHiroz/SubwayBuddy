@@ -610,9 +610,20 @@ class APIController extends FOSRestController
         if (!$matchedUsersArray) {
             throw $this->createNotFoundException('Aucuns matchs.');
         }
-        $matchedUsers = new ArrayCollection();
+        $matchedUsers = array();
         foreach($matchedUsersArray as $matchedUser){
-            $matchedUsers[] = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[1]);
+            $user           = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[1]); 
+            $subjects       = $em->getRepository('SubwayBuddyUserBundle:Subject')->findBy(array('user' => $matchedUser[1]));
+            // quickfix : on supprime les sujet des subjects
+            foreach( $subjects AS &$subject )
+            {
+                $subject->setUser( new ArrayCollection() ) ; 
+            }
+            $matchedUsers[] = array(
+                "id"    => $user->getId(),
+                "name"  => $user->getUsername(),
+                "subjects"  => $subjects
+            ) ;
         }
 
         $view = Vieww::create();
