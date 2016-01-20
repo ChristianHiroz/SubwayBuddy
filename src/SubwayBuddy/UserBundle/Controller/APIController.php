@@ -610,20 +610,20 @@ class APIController extends FOSRestController
         if (!$matchedUsersArray) {
             throw $this->createNotFoundException('Aucuns matchs.');
         }
-        $matchedUsers = array();
+        $matchedUsers = new ArrayCollection() ;
         foreach($matchedUsersArray as $matchedUser){
-            $user           = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[1]); 
-            $subjects       = $em->getRepository('SubwayBuddyUserBundle:Subject')->findBy(array('user' => $matchedUser[1]));
+            $user           = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[0]); 
+            $subjects       = $em->getRepository('SubwayBuddyUserBundle:Subject')->findBy(array('user' => $matchedUser[0]));
             // quickfix : on supprime les sujet des subjects
             foreach( $subjects AS &$subject )
             {
                 $subject->setUser( new ArrayCollection() ) ; 
             }
-            $matchedUsers[] = array(
+            $matchedUsers->add(array(
                 "id"    => $user->getId(),
                 "name"  => $user->getUsername(),
                 "subjects"  => $subjects
-            ) ;
+            ));
         }
 
         $view = Vieww::create();
@@ -672,10 +672,55 @@ class APIController extends FOSRestController
 
         return $view;
     }
+
+    /**
+     * Ordre : latitude puis longitude, exemple : 40.714728 & -73.998672
+     *
+     * @return array
+     * @View()
+     */
+    public function getIndexAction(){
+        // oui... c'est moche... mais c'est pour recup plusieurs GET (ya surement une méthode plus propre mais ça fonctionne :-))
+        $latitude   = htmlspecialchars(addslashes($_GET['latitude']));
+        $longitude  = htmlspecialchars(addslashes($_GET['longitude']));
+
+        $screenWidth    = htmlspecialchars(addslashes($_GET['screenWidth']));
+        $screenHeight   = htmlspecialchars(addslashes($_GET['screenHeight']));
+
+        $zoom       = htmlspecialchars(addslashes($_GET['zoom']));
+
+        // api key : AIzaSyAl4z1V5vAzpFWTmBAby3cjhTy3ftsx2xk
+        // 40.714728,-73.998672
+        // exemple :  https://maps.googleapis.com/maps/api/staticmap?center=51.477222,0&size=300x400&zoom=14
+
+        $imageGoogleMap = "https://maps.googleapis.com/maps/api/staticmap?center=".$latitude.",".$longitude."&size=".$screenWidth."x".$screenHeight."&zoom=" . $zoom ; 
+        // on rajoute d'éventuelles personnes autour
+        $users = $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->findAll() ;
+        foreach( $users AS $user )
+        {
+            $user_latitude  = $user->getPos_latitude() ; 
+            $user_longitude = $user->getPos_longitude() ;
+
+            // couleur du marqueur aléatoire
+            $randomColors = array( 
+                "green", "blue", "red", "purple", "black"
+            );  
+
+            $imageGoogleMap .= "&markers=color:".array_rand($randomColors)."%7Clabel:".$user->getUsername()."%7C".$user_latitude.",".$user_latitude ;
+        }
+
+        // exemple : https://maps.googleapis.com/maps/api/staticmap?center=48.870781,2.207122&size=300x400&zoom=12&markers=color:3|label:G|0,0&markers=color:0|label:G|2.206961,47.871677&markers=color:4|label:G|2.206961,48.871677&markers=color:0|label:G|5,4&markers=color:4|label:G|48.871604,2.20424&markers=color:0|label:G|5,4
+
+        $view = Vieww::create();
+        $view->setData(
+            array( 
+                "image" => $imageGoogleMap 
+            )
+        )->setStatusCode(200);
+
+        return $view;
+    }
     //</editor-fold>
-
-
-
 
 
 

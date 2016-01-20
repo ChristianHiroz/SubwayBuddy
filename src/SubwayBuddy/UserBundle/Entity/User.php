@@ -57,6 +57,20 @@ class User extends BaseUser
      **/
     private $myBuddys;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pos_latitude", type="float")
+     */
+    protected $pos_latitude;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pos_longitude", type="float")
+     */
+    protected $pos_longitude;
+
     public function __construct() {
         parent::__construct();
         $this->travels = new ArrayCollection();
@@ -74,6 +88,26 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get pos_latitude
+     *
+     * @return float
+     */
+    public function getPos_latitude()
+    {
+        return $this->pos_latitude;
+    }
+
+    /**
+     * Get pos_longitude
+     *
+     * @return float
+     */
+    public function getPos_longitude()
+    {
+        return $this->pos_longitude;
     }
 
     /**
@@ -186,6 +220,26 @@ class User extends BaseUser
     public function addSubject($subject)
     {
         $this->subjects->add($subject);
+    }
+
+    /**
+     * Set pos_latitude
+     *
+     * @return float
+     */
+    public function setPos_latitude($pos_latitude)
+    {
+       $this->pos_latitude = $pos_latitude ; 
+    }
+
+    /**
+     * Set pos_longitude
+     *
+     * @return float
+     */
+    public function setPos_longitude()
+    {
+        $this->pos_longitude = $pos_longitude ;
     }
 }
 
