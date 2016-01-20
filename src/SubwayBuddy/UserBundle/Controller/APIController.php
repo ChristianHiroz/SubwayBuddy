@@ -666,7 +666,9 @@ class APIController extends FOSRestController
      */
     public function getBuddyAction(User $user){
         $buddys = $user->getMyBuddys();
-
+        if ($buddys->isEmpty()) {
+            throw $this->createNotFoundException('Pas d\'amis, prend un curly!');
+        }
         $view = Vieww::create();
         $view->setData($buddys)->setStatusCode(200);
 
