@@ -683,7 +683,7 @@ class APIController extends FOSRestController
      * @return array
      * @View()
      */
-    public function getIndexAction(){
+    public function getMapAction(){
         // oui... c'est moche... mais c'est pour recup plusieurs GET (ya surement une méthode plus propre mais ça fonctionne :-))
         $latitude   = htmlspecialchars(addslashes($_GET['latitude']));
         $longitude  = htmlspecialchars(addslashes($_GET['longitude']));
