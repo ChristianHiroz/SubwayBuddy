@@ -693,6 +693,11 @@ class APIController extends FOSRestController
 
         $zoom       = htmlspecialchars(addslashes($_GET['zoom']));
 
+        // couleur du marqueur aléatoire
+        $randomColors = array(
+            "green", "blue", "red", "purple", "black"
+        );
+
         // api key : AIzaSyAl4z1V5vAzpFWTmBAby3cjhTy3ftsx2xk
         // 40.714728,-73.998672
         // exemple :  https://maps.googleapis.com/maps/api/staticmap?center=51.477222,0&size=300x400&zoom=14
@@ -705,16 +710,14 @@ class APIController extends FOSRestController
             $user_latitude  = $user->getPos_latitude() ; 
             $user_longitude = $user->getPos_longitude() ;
 
-            // couleur du marqueur aléatoire
-            $randomColors = array( 
-                "green", "blue", "red", "purple", "black"
-            );  
-
-            $imageGoogleMap .= "&markers=color:".array_rand($randomColors)."%7Clabel:".$user->getUsername()."%7C".$user_latitude.",".$user_longitude ;
+            shuffle($randomColors);
+            $imageGoogleMap .= "&markers=color:".$randomColors[0]."%7Clabel:".$user->getUsername()[0]."%7C".$user_latitude.",".$user_longitude ;
         }
+        //put us in the center
+        shuffle($randomColors);
+        $imageGoogleMap .= "&markers=color:".$randomColors[0]."%7Clabel:Me%7C".$latitude.",".$longitude ;
 
         // exemple : https://maps.googleapis.com/maps/api/staticmap?center=48.870781,2.207122&size=300x400&zoom=12&markers=color:3|label:G|0,0&markers=color:0|label:G|2.206961,47.871677&markers=color:4|label:G|2.206961,48.871677&markers=color:0|label:G|5,4&markers=color:4|label:G|48.871604,2.20424&markers=color:0|label:G|5,4
-
         $view = Vieww::create();
         $view->setData(
             array( 
