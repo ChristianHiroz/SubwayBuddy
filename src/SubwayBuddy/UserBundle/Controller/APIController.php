@@ -3,6 +3,7 @@
 namespace SubwayBuddy\UserBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
@@ -750,6 +751,74 @@ class APIController extends FOSRestController
                 "friends" => $friends
             )
         )->setStatusCode(200);
+        return $view;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Sub subjects">
+    /**
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="subject", nullable=false, strict=true, description="Subject id.")
+     * @RequestParam(name="child", nullable=false, strict=true, description="Child subject id.")
+     * @Put
+     *
+     * @return View
+     */
+    public function putChildSubjectAction(ParamFetcher $paramFetcher)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $subjectId = $paramFetcher->get('subject');
+        $childId = $paramFetcher->get('child');
+        $subject = $em->getRepository('SubwayBuddyUserBundle:Subject')->find($subjectId);
+        $child = $em->getRepository('SubwayBuddyUserBundle:Subject')->find($childId);
+
+        $subject->addChildSubject($child);
+        $em->persist($subject);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData(
+            array(
+                "subject" => $subject
+            )
+        )->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="subject", nullable=false, strict=true, description="Subject id.")
+     * @RequestParam(name="child", nullable=false, strict=true, description="Child subject id.")
+     * @Delete()
+     *
+     * @return View
+     */
+    public function deleteChildSubjectAction(ParamFetcher $paramFetcher)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $subjectId = $paramFetcher->get('subject');
+        $childId = $paramFetcher->get('child');
+        $subject = $em->getRepository('SubwayBuddyUserBundle:Subject')->find($subjectId);
+        $child = $em->getRepository('SubwayBuddyUserBundle:Subject')->find($childId);
+
+        $subject->removeChildSubject($child);
+        $em->persist($subject);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData(
+            array(
+                "subject" => $subject
+            )
+        )->setStatusCode(200);
+
         return $view;
     }
     //</editor-fold>
