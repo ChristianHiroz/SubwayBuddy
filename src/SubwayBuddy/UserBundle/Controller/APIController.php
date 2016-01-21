@@ -674,7 +674,9 @@ class APIController extends FOSRestController
 
         return $view;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Utile">
     /**
      * Ordre : latitude puis longitude, exemple : 40.714728 & -73.998672
      *
@@ -708,7 +710,7 @@ class APIController extends FOSRestController
                 "green", "blue", "red", "purple", "black"
             );  
 
-            $imageGoogleMap .= "&markers=color:".array_rand($randomColors)."%7Clabel:".$user->getUsername()."%7C".$user_latitude.",".$user_latitude ;
+            $imageGoogleMap .= "&markers=color:".array_rand($randomColors)."%7Clabel:".$user->getUsername()."%7C".$user_latitude.",".$user_longitude ;
         }
 
         // exemple : https://maps.googleapis.com/maps/api/staticmap?center=48.870781,2.207122&size=300x400&zoom=12&markers=color:3|label:G|0,0&markers=color:0|label:G|2.206961,47.871677&markers=color:4|label:G|2.206961,48.871677&markers=color:0|label:G|5,4&markers=color:4|label:G|48.871604,2.20424&markers=color:0|label:G|5,4
@@ -720,6 +722,32 @@ class APIController extends FOSRestController
             )
         )->setStatusCode(200);
 
+        return $view;
+    }
+
+    /**
+     * @return array
+     * @View()
+     */
+    public function getProfileAction(User $user){
+        $chatRooms  =  $user->getChatrooms();
+        $travels = $user->getTravels();
+        $subjects = $user->getSubjects();
+        $friendsRequest = $user->getBuddysWithMe();
+        $friends = $user->getMyBuddys();
+
+
+        $view = Vieww::create();
+        $view->setData(
+            array(
+                "user" => $user,
+                "chatrooms" => $chatRooms,
+                "travels" => $travels,
+                "subjects" => $subjects,
+                "friendsRequest" => $friendsRequest,
+                "friends" => $friends
+            )
+        )->setStatusCode(200);
         return $view;
     }
     //</editor-fold>

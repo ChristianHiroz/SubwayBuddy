@@ -114,7 +114,6 @@ class APIControllerTest extends WebTestCase
     }
 
 
-
     protected function assertJsonMessage($message,$excepted){
         if($message == $excepted){
             return true;

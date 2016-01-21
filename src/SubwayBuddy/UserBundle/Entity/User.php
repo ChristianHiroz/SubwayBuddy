@@ -175,7 +175,12 @@ class User extends BaseUser
 
     public function addBuddy(User $buddy){
         $this->myBuddys[] = $buddy;
-        $buddy->addBuddyWithMe($this);
+        if(!$buddy->myBuddys->contains($this)){
+            $buddy->addBuddyWithMe($this);
+        }
+        if($this->buddysWithMe->contains($buddy)){
+            $this->buddysWithMe->removeElement($buddy);
+        }
     }
 
     public function addBuddyWithMe($buddy){
@@ -237,7 +242,7 @@ class User extends BaseUser
      *
      * @return float
      */
-    public function setPos_longitude()
+    public function setPos_longitude($pos_longitude)
     {
         $this->pos_longitude = $pos_longitude ;
     }
