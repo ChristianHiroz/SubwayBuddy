@@ -613,8 +613,8 @@ class APIController extends FOSRestController
         }
         $matchedUsers = new ArrayCollection() ;
         foreach($matchedUsersArray as $matchedUser){
-            $user           = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[0]); 
-            $subjects       = $em->getRepository('SubwayBuddyUserBundle:Subject')->findBy(array('user' => $matchedUser[0]));
+            $user           = $em->getRepository('SubwayBuddyUserBundle:User')->find($matchedUser[1]);
+            $subjects       = $em->getRepository('SubwayBuddyUserBundle:Subject')->findBy(array('user' => $matchedUser[1]));
             // quickfix : on supprime les sujet des subjects
             foreach( $subjects AS &$subject )
             {
