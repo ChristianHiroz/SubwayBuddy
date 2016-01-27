@@ -246,5 +246,13 @@ class User extends BaseUser
     {
         $this->pos_longitude = $pos_longitude ;
     }
+
+    public function getLatitude(){
+        return $this->pos_latitude;
+    }
+
+    public function getLongitude(){
+        return $this->pos_longitude;
+    }
 }
 

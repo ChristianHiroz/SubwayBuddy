@@ -4,6 +4,7 @@ namespace SubwayBuddy\UserBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations\Delete;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
@@ -823,6 +824,36 @@ class APIController extends FOSRestController
     }
     //</editor-fold>
 
-
-
+    /**
+    * @return array
+    * @Get("/closeToMe/{user}")
+    * @ParamConverter("user", class="SubwayBuddyUserBundle:User")
+    */
+    public function getClosestBuddyAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entitys  =  $em->getRepository('SubwayBuddyUserBundle:User')->findAll();
+        if (!$entitys) {
+            throw $this->createNotFoundException('Data not found.');
+        }
+        $longitude = $user->getLongitude();
+        $latitude = $user->getLatitude();
+        $max_longitude = $longitude+0.005;
+        $max_latitude = $latitude+0.005;
+        $min_longitude = $longitude-0.005;
+        $min_latitude = $latitude-0.005;
+        $buddys = array();
+        foreach($entitys as $buddy){
+            if($min_longitude < $buddy->getLongitude() && $buddy->getLongitude() < $max_longitude OR $min_longitude > $buddy->getLongitude() && $buddy->getLongitude() > $max_longitude){
+                if($min_latitude < $buddy->getLatitude() && $buddy->getLatitude() < $max_latitude OR $min_latitude > $buddy->getLatitude() && $buddy->getLatitude() > $max_latitude){
+                    if($buddy != $user){
+                        $buddys[] = $buddy;
+                    }
+                }
+            }
+        }
+        $view = Vieww::create();
+        $view->setData($buddys)->setStatusCode(200);
+        return $view;
+    }
 }
