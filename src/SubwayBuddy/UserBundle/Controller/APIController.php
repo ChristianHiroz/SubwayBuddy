@@ -851,7 +851,7 @@ class APIController extends FOSRestController
                             "user" => $buddy,
                             "longitude" => $buddy->getLongitude(),
                             "latatitude" => $buddy->getLatitude(),
-                            "subjects" => $buddy->getSubject(),
+                            "subjects" => $buddy->getSubjects(),
                         );
                     }
                 }
