@@ -847,7 +847,12 @@ class APIController extends FOSRestController
             if($min_longitude < $buddy->getLongitude() && $buddy->getLongitude() < $max_longitude OR $min_longitude > $buddy->getLongitude() && $buddy->getLongitude() > $max_longitude){
                 if($min_latitude < $buddy->getLatitude() && $buddy->getLatitude() < $max_latitude OR $min_latitude > $buddy->getLatitude() && $buddy->getLatitude() > $max_latitude){
                     if($buddy != $user){
-                        $buddys[] = $buddy;
+                        $buddys[] = array(
+                            "user" => $buddy,
+                            "longitude" => $buddy->getLongitude(),
+                            "latatitude" => $buddy->getLatitude(),
+                            "subjects" => $buddy->getSubject(),
+                        );
                     }
                 }
             }
