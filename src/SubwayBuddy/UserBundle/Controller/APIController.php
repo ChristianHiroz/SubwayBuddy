@@ -844,21 +844,59 @@ class APIController extends FOSRestController
         $min_latitude = $latitude-0.005;
         $buddys = array();
         foreach($entitys as $buddy){
-            if($min_longitude < $buddy->getLongitude() && $buddy->getLongitude() < $max_longitude OR $min_longitude > $buddy->getLongitude() && $buddy->getLongitude() > $max_longitude){
-                if($min_latitude < $buddy->getLatitude() && $buddy->getLatitude() < $max_latitude OR $min_latitude > $buddy->getLatitude() && $buddy->getLatitude() > $max_latitude){
-                    if($buddy != $user){
-                        $buddys[] = array(
-                            "user" => $buddy,
-                            "longitude" => $buddy->getLongitude(),
-                            "latatitude" => $buddy->getLatitude(),
-                            "subjects" => $buddy->getSubjects(),
-                        );
+            if($buddy->getLongitude() && $buddy->getLatitude()){
+                if($min_longitude < $buddy->getLongitude() && $buddy->getLongitude() < $max_longitude OR $min_longitude > $buddy->getLongitude() && $buddy->getLongitude() > $max_longitude){
+                    if($min_latitude < $buddy->getLatitude() && $buddy->getLatitude() < $max_latitude OR $min_latitude > $buddy->getLatitude() && $buddy->getLatitude() > $max_latitude){
+                        if($buddy != $user){
+                            $buddys[] = array(
+                                "user" => $buddy,
+                                "longitude" => $buddy->getLongitude(),
+                                "latatitude" => $buddy->getLatitude(),
+                                "subjects" => $buddy->getSubjects(),
+                            );
+                        }
                     }
                 }
             }
         }
         $view = Vieww::create();
         $view->setData($buddys)->setStatusCode(200);
+        return $view;
+    }
+
+
+    /**
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="latitude", nullable=false, strict=true, description="Latitude.")
+     * @RequestParam(name="longitude", nullable=false, strict=true, description="Longitude.")
+     * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
+     * @Put("/setPosition")
+     *
+     * @return View
+     */
+    public function putGpsPositionAction(ParamFetcher $paramFetcher){
+        $em = $this->getDoctrine()->getManager();
+
+        $userId = $paramFetcher->get('user');
+        $latitude = $paramFetcher->get('latitude');
+        $longitude = $paramFetcher->get('longitude');
+
+        $user  =  $em->getRepository('SubwayBuddyUserBundle:User')->find($userId);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User doesnt exist.');
+        }
+
+        $user->setLongitude($longitude);
+        $user->setLatitude($latitude);
+
+        $em->persist($user);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData($user)->setStatusCode(200);
         return $view;
     }
 }

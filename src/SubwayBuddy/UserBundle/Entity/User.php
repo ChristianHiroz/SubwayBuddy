@@ -5,6 +5,7 @@ namespace SubwayBuddy\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * User
@@ -70,6 +71,13 @@ class User extends BaseUser
      * @ORM\Column(name="pos_longitude", type="float")
      */
     protected $pos_longitude;
+
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="texte", type="datetime")
+     */
+    private $fetechedTime;
 
     public function __construct() {
         parent::__construct();
@@ -234,7 +242,8 @@ class User extends BaseUser
      */
     public function setPos_latitude($pos_latitude)
     {
-       $this->pos_latitude = $pos_latitude ; 
+       $this->pos_latitude = $pos_latitude ;
+        $this->fetechedTime = new \DateTime();
     }
 
     /**
@@ -253,6 +262,22 @@ class User extends BaseUser
 
     public function getLongitude(){
         return $this->pos_longitude;
+    }
+
+    /**
+     * @return date
+     */
+    public function getFetechedTime()
+    {
+        return $this->fetechedTime;
+    }
+
+    /**
+     * @param date $fetechedTime
+     */
+    public function setFetechedTime($fetechedTime)
+    {
+        $this->fetechedTime = $fetechedTime;
     }
 }
 
