@@ -840,10 +840,10 @@ class APIController extends FOSRestController
         }
         $longitude = $user->getLongitude();
         $latitude = $user->getLatitude();
-        $max_longitude = $longitude+0.005;
-        $max_latitude = $latitude+0.005;
-        $min_longitude = $longitude-0.005;
-        $min_latitude = $latitude-0.005;
+        $max_longitude = $longitude+0.5;
+        $max_latitude = $latitude+0.5;
+        $min_longitude = $longitude-0.5;
+        $min_latitude = $latitude-0.5;
         $buddys = array();
         foreach($entitys as $buddy){
             if($buddy->getLongitude() && $buddy->getLatitude()){
@@ -851,11 +851,12 @@ class APIController extends FOSRestController
                     if($min_latitude < $buddy->getLatitude() && $buddy->getLatitude() < $max_latitude OR $min_latitude > $buddy->getLatitude() && $buddy->getLatitude() > $max_latitude){
                         if($buddy != $user){
                             $buddys[] = array(
-                                "user" => $buddy,
+                                "user" => $buddy->getUsername(),
                                 "longitude" => $buddy->getLongitude(),
                                 "latatitude" => $buddy->getLatitude(),
                                 "subjects" => $buddy->getSubjects(),
-                            );
+                            	"fetchedTime"	=> $buddy->getFetechedTime()
+				);
                         }
                     }
                 }
