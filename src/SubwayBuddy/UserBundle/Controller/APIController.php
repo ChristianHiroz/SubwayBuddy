@@ -850,12 +850,16 @@ class APIController extends FOSRestController
                 if($min_longitude < $buddy->getLongitude() && $buddy->getLongitude() < $max_longitude OR $min_longitude > $buddy->getLongitude() && $buddy->getLongitude() > $max_longitude){
                     if($min_latitude < $buddy->getLatitude() && $buddy->getLatitude() < $max_latitude OR $min_latitude > $buddy->getLatitude() && $buddy->getLatitude() > $max_latitude){
                         if($buddy != $user){
+
+			    $fetchedTime 	= $buddy->getFetechedTime();
+			    $fetchedTimeS 	= $fetchedTime->format('d') . "/" . $fetchedTime->format('m') . "/" . $fetchedTime->format('Y') . " " . $fetchedTime->format('H') . ":" . $fetchedTime->format('i');  
                             $buddys[] = array(
                                 "user" => $buddy->getUsername(),
                                 "longitude" => $buddy->getLongitude(),
                                 "latatitude" => $buddy->getLatitude(),
                                 "subjects" => $buddy->getSubjects(),
-                            	"fetchedTime"	=> $buddy->getFetechedTime()
+                            	"fetchedTime"	=> $fetchedTimeS,
+				"fetchedTimeTimestamp" => strtotime($fetchedTime)
 				);
                         }
                     }
