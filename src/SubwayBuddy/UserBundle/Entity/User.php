@@ -61,21 +61,21 @@ class User extends BaseUser
     /**
      * @var integer
      *
-     * @ORM\Column(name="pos_latitude", type="float")
+     * @ORM\Column(name="pos_latitude", type="float", nullable=true)
      */
     protected $pos_latitude;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="pos_longitude", type="float")
+     * @ORM\Column(name="pos_longitude", type="float", nullable=true)
      */
     protected $pos_longitude;
 
     /**
      * @var date
      *
-     * @ORM\Column(name="texte", type="datetime")
+     * @ORM\Column(name="texte", type="datetime", nullable=true)
      */
     private $fetechedTime;
 
