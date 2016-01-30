@@ -359,7 +359,8 @@ class APIController extends FOSRestController
             $view->setData($user)->setStatusCode(200);
             return $view;
         } else {
-            $view->setData()->setStatusCode(500);
+            $message= "An error occured while creating the user";
+            $view->setData($message)->setStatusCode(500);
             return $view;
         }
     }
