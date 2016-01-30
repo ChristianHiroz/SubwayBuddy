@@ -395,7 +395,8 @@ class APIController extends FOSRestController
             $view->setData($user)->setStatusCode(200);
             return $view;
         } else {
-            $view = $this->getErrorsView($errors);
+            $message= "An error occured while updating the user";
+            $view->setData($message)->setStatusCode(500);
             return $view;
         }
     }
