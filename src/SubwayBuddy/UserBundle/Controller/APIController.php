@@ -891,8 +891,8 @@ class APIController extends FOSRestController
             throw $this->createNotFoundException('User doesnt exist.');
         }
 
-        $user->setLongitude($longitude);
-        $user->setLatitude($latitude);
+        $user->setPos_longitude($longitude);
+        $user->setPos_latitude($latitude);
 
         $em->persist($user);
         $em->flush();
