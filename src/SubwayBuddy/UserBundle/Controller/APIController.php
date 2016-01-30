@@ -359,7 +359,7 @@ class APIController extends FOSRestController
             $view->setData($user)->setStatusCode(200);
             return $view;
         } else {
-            $view = $this->getErrorsView($errors);
+            $view->setData()->setStatusCode(500);
             return $view;
         }
     }
