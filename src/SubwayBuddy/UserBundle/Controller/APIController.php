@@ -852,7 +852,7 @@ class APIController extends FOSRestController
                         if($buddy != $user){
 
 			    $fetchedTime 	= $buddy->getFetechedTime();
-			    $fetchedTimeS 	= $fetchedTime->format('d') . "/" . $fetchedTime->format('m') . "/" . $fetchedTime->format('Y') . " " . $fetchedTime->format('H') . ":" . $fetchedTime->format('i');  
+			    $fetchedTimeS 	= $fetchedTime->format('d') . "/" . $fetchedTime->format('m') . "/" . $fetchedTime->format('Y') . " " . $fetchedTime->format('H') . ":" . $fetchedTime->format('i') . ":" . $fetchedTime->format('s') ;  
                             $buddys[] = array(
                                 "user" => $buddy->getUsername(),
                                 "longitude" => $buddy->getLongitude(),
