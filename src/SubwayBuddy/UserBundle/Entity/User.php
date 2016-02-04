@@ -191,7 +191,7 @@ class User extends BaseUser
             $this->removeBuddyWithMe($buddy);
         }
         elseif(!$buddy->myBuddys->contains($this)){
-            $buddy->addBuddyWithMe($buddy);
+            $buddy->addBuddyWithMe($this);
         }
     }
 
