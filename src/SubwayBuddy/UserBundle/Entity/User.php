@@ -183,16 +183,30 @@ class User extends BaseUser
 
     public function addBuddy(User $buddy){
         $this->myBuddys[] = $buddy;
-        if(!$buddy->myBuddys->contains($this)){
-            $buddy->addBuddyWithMe($this);
-        }
         if($this->buddysWithMe->contains($buddy)){
             $this->buddysWithMe->removeElement($buddy);
+        }
+        elseif(!$buddy->myBuddys->contains($this)){
+            $buddy->buddysWithMe->add($this);
         }
     }
 
     public function addBuddyWithMe($buddy){
         $this->buddysWithMe[] = $buddy;
+    }
+
+    public function removeBuddy(User $buddy){
+        $this->myBuddys->removeElement($buddy);
+        if($buddy->myBuddys->contains($this)){
+            $buddy->myBuddys->removeElement($this);
+        }
+        elseif($buddy->buddysWithMe->contains($this)){
+            $buddy->buddysWithMe->removeElement($this);
+        }
+    }
+
+    public function removeBuddyWithMe(User $buddy){
+        $this->buddysWithMe->removeElement($buddy);
     }
 
     /**

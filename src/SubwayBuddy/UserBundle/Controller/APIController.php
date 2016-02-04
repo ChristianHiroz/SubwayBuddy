@@ -663,6 +663,32 @@ class APIController extends FOSRestController
     }
 
     /**
+     * Update a User to delete a friend data.<br/>
+     *
+     * @param ParamFetcher $paramFetcher Paramfetcher
+     *
+     * @RequestParam(name="user", nullable=false, strict=true, description="User id.")
+     * @RequestParam(name="buddy", nullable=false, strict=true, description="User buddy id.")
+     * @Put
+     *
+     * @return View
+     */
+    public function putDeleteBuddyAction(ParamFetcher $paramFetcher)
+    {
+        $id = $paramFetcher->get('user');
+        $idBuddy = $paramFetcher->get('buddy');
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->find($id);
+        $buddy  =  $this->getDoctrine()->getEntityManager()->getRepository('SubwayBuddyUserBundle:User')->find($idBuddy);
+        $user->removeBuddy($buddy);
+        $view = Vieww::create();
+        $userManager->updateUser($user);
+        $view->setData($user)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
      * @param User $user
      * @return array
      * @View()
