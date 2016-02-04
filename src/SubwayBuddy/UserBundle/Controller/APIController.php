@@ -866,22 +866,27 @@ class APIController extends FOSRestController
         }
         $longitude = $user->getLongitude();
         $latitude = $user->getLatitude();
-        $max_longitude = $longitude+0.005;
-        $max_latitude = $latitude+0.005;
-        $min_longitude = $longitude-0.005;
-        $min_latitude = $latitude-0.005;
+        $max_longitude = $longitude+0.5;
+        $max_latitude = $latitude+0.5;
+        $min_longitude = $longitude-0.5;
+        $min_latitude = $latitude-0.5;
         $buddys = array();
         foreach($entitys as $buddy){
             if($buddy->getLongitude() && $buddy->getLatitude()){
                 if($min_longitude < $buddy->getLongitude() && $buddy->getLongitude() < $max_longitude OR $min_longitude > $buddy->getLongitude() && $buddy->getLongitude() > $max_longitude){
                     if($min_latitude < $buddy->getLatitude() && $buddy->getLatitude() < $max_latitude OR $min_latitude > $buddy->getLatitude() && $buddy->getLatitude() > $max_latitude){
                         if($buddy != $user){
+
+			    $fetchedTime 	= $buddy->getFetechedTime();
+			    $fetchedTimeS 	= $fetchedTime->format('d') . "/" . $fetchedTime->format('m') . "/" . $fetchedTime->format('Y') . " " . $fetchedTime->format('H') . ":" . $fetchedTime->format('i') . ":" . $fetchedTime->format('s') ;  
                             $buddys[] = array(
-                                "user" => $buddy,
+                                "user" => $buddy->getUsername(),
                                 "longitude" => $buddy->getLongitude(),
                                 "latatitude" => $buddy->getLatitude(),
                                 "subjects" => $buddy->getSubjects(),
-                            );
+                            	"fetchedTime"	=> $fetchedTimeS,
+				"fetchedTimeTimestamp" => strtotime($fetchedTime)
+				);
                         }
                     }
                 }
