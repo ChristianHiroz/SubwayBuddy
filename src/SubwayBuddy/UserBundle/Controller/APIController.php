@@ -4,6 +4,7 @@ namespace SubwayBuddy\UserBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineExtensions\Tests\Entities\Date;
+use Elastica\Param;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
@@ -458,6 +459,82 @@ class APIController extends FOSRestController
         $user2->addChatroom($chatroom);
         $chatroom->setName($name);
         $chatroom->setDescription($description);
+
+        $em->persist($chatroom);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData($chatroom)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     *
+     * @Delete()
+     * @ParamConverter("chatroom", class="SubwayBuddyUserBundle:Chatroom")
+     *
+     * @return View
+     */
+    public function deleteChatroomAction(Chatroom $chatroom)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($chatroom);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData("Ok"
+        )->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * @param ParamFetcher $paramFetcher
+     *
+     * @RequestParam(name="user", nullable=false, strict=true, description="User to add user.")
+     * @RequestParam(name="chatroom", nullable=false, strict=true, description="Chatroom.")
+     * @Put()
+     */
+    public function putChatroomAddUserAction(ParamFetcher $paramFetcher){
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $paramFetcher->get('user');
+        $chatroom = $paramFetcher->get('chatroom');
+
+        $user =  $em->getRepository('SubwayBuddyUserBundle:User')->find($user);
+        $chatroom =  $em->getRepository('SubwayBuddyUserBundle:Chatroom')->find($chatroom);
+
+        $chatroom->addUser($user);
+        $user->addChatroom($chatroom);
+
+        $em->persist($chatroom);
+        $em->flush();
+
+        $view = Vieww::create();
+        $view->setData($chatroom)->setStatusCode(200);
+
+        return $view;
+    }
+
+    /**
+     * @param ParamFetcher $paramFetcher
+     *
+     * @RequestParam(name="user", nullable=false, strict=true, description="User to add user.")
+     * @RequestParam(name="chatroom", nullable=false, strict=true, description="Chatroom.")
+     * @Put()
+     */
+    public function deleteChatroomAddUserAction(ParamFetcher $paramFetcher){
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $paramFetcher->get('user');
+        $chatroom = $paramFetcher->get('chatroom');
+
+        $user =  $em->getRepository('SubwayBuddyUserBundle:User')->find($user);
+        $chatroom =  $em->getRepository('SubwayBuddyUserBundle:Chatroom')->find($chatroom);
+
+        $chatroom->removeUser($user);
+        $user->removeChatroom($chatroom);
 
         $em->persist($chatroom);
         $em->flush();
