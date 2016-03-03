@@ -3,6 +3,7 @@
 namespace SubwayBuddy\UserBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use DoctrineExtensions\Tests\Entities\Date;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
@@ -932,4 +933,45 @@ class APIController extends FOSRestController
         $view->setData($user)->setStatusCode(200);
         return $view;
     }
+
+    /**
+     * @return array
+     * @Get("/newMessageCount/{user}")
+     * @ParamConverter("user", class="SubwayBuddyUserBundle:User")
+     */
+    public function getNewMessageCountAction(User $user){
+        $chatsrooms = $user->getChatrooms();
+        $count = 0;
+        foreach($chatsrooms as $chatroom){
+            if(!$chatroom->getMessages()->getLast()->isRead()){
+                $count++;
+            }
+        }
+        $view = Vieww::create();
+        $view->setData($count)->setStatusCode(200);
+        return $view;
+    }
+
+    /**
+     * @return array
+     * @Put("/messageRead/{chatroom}")
+     * @ParamConverter("chatroom", class="SubwayBuddyUserBundle:Chatroom")
+     */
+    public function putMessageReadAction(Chatroom $chatroom){
+        $em = $this->getDoctrine()->getManager();
+
+        foreach($chatroom->getMessages() as $message){
+            if(!$message->isRead()){
+                $message->setRead(true);
+                $em->persist($message);
+            }
+        }
+
+        $em->flush();
+        $view = Vieww::create();
+        $view->setData("Ok")->setStatusCode(200);
+        return $view;
+    }
+
+
 }

@@ -3,6 +3,7 @@
 namespace SubwayBuddy\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Message
@@ -36,11 +37,30 @@ class Message
     private $user;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="sendDate", type="datetime")
+     */
+    private $sendDate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="read", type="boolean")
+     */
+    private $read;
+
+    /**
      * @var ChatRoom
      *
      *@ORM\ManyToOne(targetEntity="SubwayBuddy\UserBundle\Entity\Chatroom", inversedBy="messages")
      */
     private $chatroom;
+
+    public function __construct(){
+        $this->sendDate = new DateTime();
+        $this->read = false;
+    }
 
     /**
      * @return ChatRoom
@@ -115,6 +135,30 @@ class Message
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getSendDate()
+    {
+        return $this->sendDate;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRead()
+    {
+        return $this->read;
+    }
+
+    /**
+     * @param boolean $read
+     */
+    public function setRead($read)
+    {
+        $this->read = $read;
     }
 }
 

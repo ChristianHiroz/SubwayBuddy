@@ -244,6 +244,20 @@
                     <td>userId (int : userId)</td>
                     <td>Code 200: chatRooms (list Chatrooms)</td>
                 </tr>
+                <tr class="active">
+                    <td>Count new message for User</td>
+                    <td>GET</td>
+                    <td>/api/newMessageCount/{user}</td>
+                    <td>user (int : userId)</td>
+                    <td>Code 200: count (integer)</td>
+                </tr>
+                <tr class="active">
+                    <td>Chatrooms all message read</td>
+                    <td>PUT</td>
+                    <td>/api/messageRead/{chatroom}</td>
+                    <td>chatroom (int : chatroomId)</td>
+                    <td>Code 200: Ok</td>
+                </tr>
               </table>
           </div>
           <div class="modal-footer">
